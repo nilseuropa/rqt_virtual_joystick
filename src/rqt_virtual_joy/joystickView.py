@@ -13,7 +13,7 @@ class JoystickView(QWidget):
     def __init__(self, parent = None):
         super(JoystickView, self).__init__(parent)
         self._initialized = False
-        self._stickSize = 50 # adapt to widget size
+        self._stickSize = self.width() # ??
 
         self._stickView = JoystickPointView(self)
         self._stickView.xMoved.connect(self.receiveXMoved)
@@ -40,8 +40,8 @@ class JoystickView(QWidget):
             self._initialized = True
 
         borderWidth = 1
-        joyRange = 200 # adapt to widget size
-        center = QtCore.QPoint(self.height()/2,self.width()/2)
+        joyRange = self.width()/3
+        center = QtCore.QPoint(self.width()/2,self.height()/2)
 
         qp = QPainter()
         qp.begin(self)
@@ -49,7 +49,6 @@ class JoystickView(QWidget):
         qp.setPen(QPen(QtCore.Qt.lightGray, borderWidth, QtCore.Qt.SolidLine, QtCore.Qt.RoundCap,QtCore.Qt.RoundJoin))
 
         if self._mode == "circle":
-
             qp.drawEllipse(center,joyRange,joyRange)
 
         if self._mode == "square":
@@ -64,8 +63,8 @@ class JoystickView(QWidget):
         super(JoystickView,self).paintEvent(event)
 
     def placeStickAtCenter(self):
-        stickInitPosH = self.height()/2 - self._stickSize /2
-        stickInitPosW = self.width()/2  - self._stickSize /2
+        stickInitPosH = self.width()/2 - self._stickSize /2
+        stickInitPosW = self.height()/2  - self._stickSize /2
         self._stickView.setGeometry(stickInitPosH,stickInitPosW,self._stickSize,self._stickSize)
 
     def getJoyValue(self):
@@ -80,7 +79,7 @@ class JoystickPointView(QWidget):
 
     def __init__(self,parent = None):
         super(JoystickPointView,self).__init__(parent)
-        self._range = 200
+        self._range = self.width() * 2 # ??
         self._mode = "circle"
 
 
@@ -98,8 +97,8 @@ class JoystickPointView(QWidget):
         qp.begin(self)
 
         borderWidth = 2
-        radius = self.height()/2
-        center = QtCore.QPoint(self.height()/2,self.width()/2)
+        radius = self.width()/2
+        center = QtCore.QPoint(self.width()/2,self.height()/2)
 
         # Outer Circle
         qp.setRenderHint(QPainter.Antialiasing, True)

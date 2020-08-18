@@ -84,7 +84,6 @@ class virtualJoyPlugin(Plugin):
         self._widget.shapeSelectBox.setCurrentText(args.type) # circle
         self._widget.joy.setMode(args.type)
 
-
     def topicNameUpdated(self):
         self.updatePublisher()
 
